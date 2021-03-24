@@ -99,13 +99,10 @@ class Game extends React.Component {
         location = null;
       }
       let btnStyle;
-      let endBold;
       if(move === this.state.stepNumber){
         btnStyle = {fontWeight:'bold'};
-        endBold = '<\b>';
       } else {
         btnStyle = {fontWeight:'normal'};
-        endBold = null;
       }
       return (
         <li key={move}>
