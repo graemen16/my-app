@@ -49,6 +49,7 @@ class Game extends React.Component {
     this.state = {
       history: [{
         squares: Array(9).fill(null),
+        square: null,
       }],
       stepNumber: 0,
       xIsNext: true,
@@ -66,6 +67,7 @@ class Game extends React.Component {
     this.setState({
       history: history.concat([{
         squares: squares,
+        square: i,
       }]),
       stepNumber: history.length,
       xIsNext: !this.state.xIsNext,
@@ -88,9 +90,27 @@ class Game extends React.Component {
       const desc = move ?
         'Go to move #' + move :
         'Go to game start';
+      let location;
+      if(step.square !== null){
+        const row = Math.ceil((step.square + 1)/ 3);
+        const col = step.square + 1 - ((row - 1) * 3);
+        location = '(' + col + ', ' + row + ')';
+      } else {
+        location = null;
+      }
+      let btnStyle;
+      let endBold;
+      if(move === this.state.stepNumber){
+        btnStyle = {fontWeight:'bold'};
+        endBold = '<\b>';
+      } else {
+        btnStyle = {fontWeight:'normal'};
+        endBold = null;
+      }
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          {location}   
+          <button onClick={() => this.jumpTo(move)} style = {btnStyle}>{desc}</button>
         </li>
       );
     });
